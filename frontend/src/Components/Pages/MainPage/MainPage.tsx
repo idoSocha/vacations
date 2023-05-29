@@ -1,8 +1,8 @@
-import "./Vacations.css";
+import "./MainPage.css";
 import { NavLink } from "react-router-dom";
 import SingleVacation from "../../Vacations/SingleVacation/SingleVacation";
 
-function Vacations(): JSX.Element {
+function MainPage(): JSX.Element {
   return (
     <div className="Vacations">
       <SingleVacation />
@@ -13,4 +13,4 @@ function Vacations(): JSX.Element {
   );
 }
 
-export default Vacations;
+export default MainPage;
