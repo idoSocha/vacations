@@ -9,11 +9,13 @@ import {
 import { useForm } from "react-hook-form";
 import User from "../../Models/User";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 import { log } from "console";
+import { useState } from "react";
 
 function Login(): JSX.Element {
   const navigate = useNavigate();
+  const [isPass, setIsPass] = useState(false);
   const {
     register,
     handleSubmit,
@@ -24,13 +26,11 @@ function Login(): JSX.Element {
     axios
       .get(`http://localhost:4000/api/v1/vacations/getUser/${userData.email}`)
       .then((response) => {
-        console.log(response);
         if (response.data[0].password == userData.password) {
           navigate("/");
         } else {
-          console.log("not authorized");
+          setIsPass(true);
         }
-        // navigate("/");
       });
   };
   return (
@@ -74,6 +74,7 @@ function Login(): JSX.Element {
           />
           <br />
           <span className="ErrMsg">{errors.password?.message}</span>
+          {isPass && <span>wrong password</span>}
           <br />
           <Button variant="contained" type="submit">
             Login
