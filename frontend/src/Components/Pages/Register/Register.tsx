@@ -1,26 +1,89 @@
 import { Button, Link, TextField, Typography } from "@mui/material";
 import "./Register.css";
+import User from "../../Models/User";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Register(): JSX.Element {
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<User>();
+
+  const send = (userData: User) => {
+    axios
+      .post("http://localhost:4000/api/v1/vacations/addUser", userData)
+      .then((response) => {
+        navigate("/");
+      });
+  };
   return (
     <div className="Register">
       <Typography component="h1" variant="h5">
         Register
       </Typography>
       <br /> <br />
-      <TextField id="outlined-basic" label="First Name" variant="outlined" />
-      <br /> <br />
-      <TextField id="outlined-basic" label="Last Name" variant="outlined" />
-      <br /> <br />
-      <TextField
-        id="outlined-basic"
-        label="Email"
-        variant="outlined"
-      /> <br /> <br />
-      <TextField id="outlined-basic" label="Password" variant="outlined" />
-      <br /> <br />
-      <Button variant="contained">Login</Button>
-      <br /> <br />
+      <form onSubmit={handleSubmit(send)}>
+        <TextField
+          label="First Name"
+          variant="outlined"
+          {...register("private_name", {
+            required: { value: true, message: "please enter a name " },
+            minLength: {
+              value: 1,
+              message: "please enter a valid name",
+            },
+          })}
+        />
+        <div className="ErrMsg">{errors.private_name?.message}</div>
+
+        <TextField
+          label="Last Name"
+          variant="outlined"
+          {...register("last_name", {
+            required: { value: true, message: "please enter a last name " },
+            minLength: {
+              value: 2,
+              message: "please enter a valid last name",
+            },
+          })}
+        />
+        <div className="ErrMsg">{errors.last_name?.message}</div>
+        <TextField
+          label="Email"
+          type="email"
+          variant="outlined"
+          {...register("email", {
+            required: { value: true, message: "please enter email " },
+            minLength: {
+              value: 5,
+              message: "please enter a valid email",
+            },
+          })}
+        />
+        <div className="ErrMsg">{errors.email?.message}</div>
+
+        <TextField
+          type="password"
+          label="Password"
+          variant="outlined"
+          {...register("password", {
+            required: { value: true, message: "please enter password " },
+            minLength: {
+              value: 3,
+              message: "please enter a password longer than 3 letters",
+            },
+          })}
+        />
+        <div className="ErrMsg">{errors.password?.message}</div>
+
+        <Button type="submit" variant="contained">
+          Register
+        </Button>
+      </form>
       <p>Already a member?</p>
       <Link href="/login" variant="body2" color="secondary">
         login

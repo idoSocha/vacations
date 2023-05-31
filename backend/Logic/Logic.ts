@@ -66,6 +66,10 @@ const getAllUsers = async () => {
   const SQLcommand = `SELECT * FROM project03.users`;
   return await dal_mysql.execute(SQLcommand);
 };
+const getUserByEmail = async (email: string) => {
+  const SQLcommand = `SELECT * FROM project03.users WHERE email ='${email}'`;
+  return await dal_mysql.execute(SQLcommand);
+};
 
 ///////////followers////////
 
@@ -143,6 +147,7 @@ export default {
   createFollowerTable,
   addUser,
   getAllUsers,
+  getUserByEmail,
   addFollower,
   deleteFollower,
   getFollowersByVacationCode,

@@ -66,6 +66,15 @@ router.post(
   }
 );
 
+router.get(
+  "/getUser/:email",
+  async (request: Request, response: Response, next: NextFunction) => {
+    const email = request.params.email;
+    const result = await Logic.getUserByEmail(email);
+    response.status(200).json(result);
+  }
+);
+
 //////followers//////
 
 //adding a new follower by clicking the heart

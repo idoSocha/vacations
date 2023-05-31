@@ -8,8 +8,12 @@ import {
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import User from "../../Models/User";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { log } from "console";
 
 function Login(): JSX.Element {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -17,7 +21,17 @@ function Login(): JSX.Element {
   } = useForm<User>();
 
   const send = (userData: User) => {
-    console.log(userData);
+    axios
+      .get(`http://localhost:4000/api/v1/vacations/getUser/${userData.email}`)
+      .then((response) => {
+        console.log(response);
+        if (response.data[0].password == userData.password) {
+          navigate("/");
+        } else {
+          console.log("not authorized");
+        }
+        // navigate("/");
+      });
   };
   return (
     <div className="Login">
@@ -35,10 +49,10 @@ function Login(): JSX.Element {
             label="Email"
             variant="outlined"
             {...register("email", {
-              required: { value: true, message: "אנא הזן אימייל " },
+              required: { value: true, message: "please enter email" },
               minLength: {
                 value: 5,
-                message: " אנא הזן אימייל ארוך מ5 תווים ",
+                message: "please enter a valid email",
               },
             })}
           />
@@ -51,10 +65,10 @@ function Login(): JSX.Element {
             type="password"
             variant="outlined"
             {...register("password", {
-              required: { value: true, message: "אנא הזן סיסמא" },
+              required: { value: true, message: "please enter password" },
               minLength: {
-                value: 5,
-                message: "אנא הזן סיסמא ארוכה מ5 תווים",
+                value: 3,
+                message: "please enter a password longer than 3 letters",
               },
             })}
           />
