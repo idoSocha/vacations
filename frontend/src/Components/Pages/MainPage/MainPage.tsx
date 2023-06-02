@@ -1,19 +1,20 @@
 import "./MainPage.css";
 import { NavLink } from "react-router-dom";
 import SingleVacation from "../../Vacations/SingleVacation/SingleVacation";
-import { useState } from "react";
+import Vacation from "../../Models/Vacation";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { log } from "console";
 
 function MainPage(): JSX.Element {
   const [vacationList, setList] = useState([]);
 
-  axios
-    .get("http://localhost:4000/api/v1/vacations/vacationList")
-    .then((response) => {
-      setList(response.data);
-    });
-  // setList(vacationData.data);
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/api/v1/vacations/vacationList")
+      .then((response) => {
+        setList(response.data);
+      });
+  }, []);
 
   return (
     <div className="MainPage">
