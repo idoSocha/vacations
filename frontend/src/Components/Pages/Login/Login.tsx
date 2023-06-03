@@ -47,6 +47,7 @@ function Login(): JSX.Element {
           <TextField
             id="outlined-basic"
             label="Email"
+            type="email"
             variant="outlined"
             {...register("email", {
               required: { value: true, message: "please enter email" },
@@ -66,10 +67,6 @@ function Login(): JSX.Element {
             variant="outlined"
             {...register("password", {
               required: { value: true, message: "please enter password" },
-              minLength: {
-                value: 3,
-                message: "please enter a password longer than 3 letters",
-              },
             })}
           />
           <br />

@@ -33,7 +33,7 @@ function Register(): JSX.Element {
           {...register("private_name", {
             required: { value: true, message: "please enter a name " },
             minLength: {
-              value: 1,
+              value: 2,
               message: "please enter a valid name",
             },
           })}
@@ -73,8 +73,8 @@ function Register(): JSX.Element {
           {...register("password", {
             required: { value: true, message: "please enter password " },
             minLength: {
-              value: 3,
-              message: "please enter a password longer than 3 letters",
+              value: 4,
+              message: "password should be at least 4 characters long",
             },
           })}
         />
