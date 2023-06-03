@@ -1,12 +1,12 @@
 import "./MainPage.css";
 import { NavLink } from "react-router-dom";
 import SingleVacation from "../../Vacations/SingleVacation/SingleVacation";
-import Vacation from "../../Models/Vacation";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Vacation from "../../Models/Vacation";
 
 function MainPage(): JSX.Element {
-  const [vacationList, setList] = useState([]);
+  const [vacationList, setList] = useState<Vacation[]>([]);
 
   useEffect(() => {
     axios
@@ -14,7 +14,7 @@ function MainPage(): JSX.Element {
       .then((response) => {
         setList(response.data);
       });
-  }, []);
+  }, [vacationList]);
 
   return (
     <div className="MainPage">

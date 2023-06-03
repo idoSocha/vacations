@@ -11,7 +11,6 @@ import "./SingleVacation.css";
 import moment from "moment";
 
 interface vacationProps {
-  vacation_code: number;
   destination: string;
   description: string;
   start_date: Date;
@@ -43,36 +42,6 @@ function SingleVacation(props: vacationProps): JSX.Element {
           </CardContent>
         </Card>
       </Box>
-      {/* <Box width="300px">
-        <Card variant="outlined">
-          <CardMedia
-            component="img"
-            height="200px"
-            image="https:source.unsplash.com/random"
-          />
-          <CardContent>
-            <Typography variant="body2">hey</Typography>
-            <CardActions>
-              <Button size="small">$40</Button>
-            </CardActions>
-          </CardContent>
-        </Card>
-      </Box>
-      <Box width="300px">
-        <Card variant="outlined">
-          <CardMedia
-            component="img"
-            height="200px"
-            image="https:source.unsplash.com/random"
-          />
-          <CardContent>
-            <Typography variant="body2">hey</Typography>
-            <CardActions>
-              <Button size="small">$40</Button>
-            </CardActions>
-          </CardContent>
-        </Card>
-      </Box> */}
     </div>
   );
 }
