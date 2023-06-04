@@ -91,9 +91,8 @@ const deleteFollower = (user_code: number) => {
 };
 
 const getFollowersByVacationCode = async (vacation_code: number) => {
-  return await dal_mysql.execute(
-    `SELECT * FROM project03.followers WHERE vacation_code =${vacation_code}`
-  );
+  const SQLcommand = `SELECT * FROM project03.followers WHERE vacation_code =${vacation_code}`;
+  return await dal_mysql.execute(SQLcommand);
 };
 
 // one time run on the server.ts file//

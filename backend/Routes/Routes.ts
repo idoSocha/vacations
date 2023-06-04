@@ -91,9 +91,8 @@ router.get(
   "/followersVacation/:vacation_code", // check if possible to delete by the user code
   async (request: Request, response: Response, next: NextFunction) => {
     const vacation_code = +request.params.vacation_code;
-    response
-      .status(204)
-      .json(await Logic.getFollowersByVacationCode(vacation_code));
+    const result = await Logic.getFollowersByVacationCode(vacation_code);
+    response.status(200).json(result);
   }
 );
 

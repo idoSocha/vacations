@@ -12,7 +12,8 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import "./SingleVacation.css";
 import moment from "moment";
 import { useState } from "react";
-// import axios from "axios";
+import axios from "axios";
+import { log } from "console";
 
 interface vacationProps {
   destination: string;
@@ -23,12 +24,20 @@ interface vacationProps {
   file_img_name: string;
 }
 function SingleVacation(props: vacationProps): JSX.Element {
-  // const [liked, setliked] = useState(false);
-
-  // const isliked = () => {
-  //   axios.post("http://localhost:4000/api/v1/vacations/addFollower",);
-  //   setliked(true);
-  // };
+  const [liked, setliked] = useState(false);
+  const arr = {
+    user_code: 3,
+    vacation_code: 4,
+  };
+  const isliked = () => {
+    axios
+      .post("http://localhost:4000/api/v1/vacations/addFollower", arr)
+      .then((response) => {
+        setliked(true);
+        console.log(response);
+      });
+    setliked(false);
+  };
 
   return (
     <div className="SingleVacation">
@@ -38,9 +47,9 @@ function SingleVacation(props: vacationProps): JSX.Element {
             <IconButton
               id="favorite"
               aria-label="add to favorites"
-              // onClick={isliked}
+              onClick={isliked}
             >
-              <FavoriteIcon />
+              <FavoriteIcon className={liked ? "liked" : " "} />
             </IconButton>
             <CardMedia
               component="img"
