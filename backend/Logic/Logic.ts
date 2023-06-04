@@ -44,7 +44,7 @@ const getVacationByVacationCode = async (vacation_code: number) => {
 };
 
 const getAllVacations = async () => {
-  const SQLcommand = `SELECT * FROM project03.vacations`;
+  const SQLcommand = `SELECT * FROM project03.vacations ORDER BY start_date`;
   return await dal_mysql.execute(SQLcommand);
 };
 
@@ -79,7 +79,9 @@ const addFollower = async (newFollower: Follower) => {
     INSERT INTO project03.followers
     (user_code,vacation_code) 
     VALUES 
-    ('${newFollower.user_code}','${newFollower.vacation_code}')`;
+    ('${newFollower.user_code}','${newFollower.vacation_code}');`;
+  const result: OkPacket = await dal_mysql.execute(SQLcommand);
+  return result.insertId;
 };
 
 const deleteFollower = (user_code: number) => {
