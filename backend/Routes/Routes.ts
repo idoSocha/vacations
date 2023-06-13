@@ -48,13 +48,13 @@ router.get(
 ///////users////////////
 
 // get all the users
-router.get(
-  "/userList",
-  async (request: Request, response: Response, next: NextFunction) => {
-    const result = await Logic.getAllUsers();
-    response.status(200).json(result);
-  }
-);
+// router.get(
+//   "/userList",
+//   async (request: Request, response: Response, next: NextFunction) => {
+//     const result = await Logic.getAllUsers();
+//     response.status(200).json(result);
+//   }
+// );
 
 //adding a new user via register
 router.post(
@@ -66,11 +66,11 @@ router.post(
   }
 );
 
-router.get(
-  "/getUser/:email",
+router.post(
+  "/getUser",
   async (request: Request, response: Response, next: NextFunction) => {
-    const email = request.params.email;
-    const result = await Logic.getUserByEmail(email);
+    const user = request.body;
+    const result = await Logic.getUser(user);
     response.status(200).json(result);
   }
 );

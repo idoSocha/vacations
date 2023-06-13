@@ -9,13 +9,15 @@ import {
 import { useForm } from "react-hook-form";
 import User from "../../Models/User";
 import axios from "axios";
-import { Form, useNavigate } from "react-router-dom";
-import { log } from "console";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { getUserAction, isLoggedInAction } from "../../../Redux/UsersReducer";
+import { project } from "../../../Redux/ProjectStore";
 
 function Login(): JSX.Element {
   const navigate = useNavigate();
   const [isPass, setIsPass] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -24,15 +26,17 @@ function Login(): JSX.Element {
 
   const send = (userData: User) => {
     axios
-      .get(`http://localhost:4000/api/v1/vacations/getUser/${userData.email}`)
+      .post(`http://localhost:4000/api/v1/vacations/getUser`, userData)
       .then((response) => {
-        if (response.data[0].password == userData.password) {
+        if (project.dispatch(getUserAction(response.data)).payload.length > 0) {
+          project.dispatch(isLoggedInAction(true));
           navigate("/");
         } else {
           setIsPass(true);
         }
       });
   };
+
   return (
     <div className="Login">
       <Box
@@ -64,6 +68,7 @@ function Login(): JSX.Element {
             id="outlined-basic"
             label="Password"
             type="password"
+            onKeyUp={() => setIsPass(false)}
             variant="outlined"
             {...register("password", {
               required: { value: true, message: "please enter password" },

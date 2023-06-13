@@ -4,9 +4,13 @@ import User from "../../Models/User";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { project } from "../../../Redux/ProjectStore";
+import { addUserAction } from "../../../Redux/UsersReducer";
 
 function Register(): JSX.Element {
   const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -17,6 +21,7 @@ function Register(): JSX.Element {
     axios
       .post("http://localhost:4000/api/v1/vacations/addUser", userData)
       .then((response) => {
+        project.dispatch(addUserAction(response.data));
         navigate("/");
       });
   };

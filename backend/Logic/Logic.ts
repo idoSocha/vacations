@@ -62,12 +62,12 @@ const addUser = async (newUser: User) => {
   return result.insertId;
 };
 
-const getAllUsers = async () => {
-  const SQLcommand = `SELECT * FROM project03.users`;
-  return await dal_mysql.execute(SQLcommand);
-};
-const getUserByEmail = async (email: string) => {
-  const SQLcommand = `SELECT * FROM project03.users WHERE email ='${email}'`;
+// const getAllUsers = async () => {
+//   const SQLcommand = `SELECT * FROM project03.users`;
+//   return await dal_mysql.execute(SQLcommand);
+// };
+const getUser = async (newUser: User) => {
+  const SQLcommand = `SELECT * FROM project03.users WHERE email ='${newUser.email}' AND password='${newUser.password}'`;
   return await dal_mysql.execute(SQLcommand);
 };
 
@@ -147,8 +147,8 @@ export default {
   createUserTable,
   createFollowerTable,
   addUser,
-  getAllUsers,
-  getUserByEmail,
+  // getAllUsers,
+  getUser,
   addFollower,
   deleteFollower,
   getFollowersByVacationCode,

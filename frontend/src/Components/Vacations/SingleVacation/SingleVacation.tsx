@@ -11,9 +11,6 @@ import {
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import "./SingleVacation.css";
 import moment from "moment";
-import { useState } from "react";
-import axios from "axios";
-import { log } from "console";
 
 interface vacationProps {
   destination: string;
@@ -24,32 +21,13 @@ interface vacationProps {
   file_img_name: string;
 }
 function SingleVacation(props: vacationProps): JSX.Element {
-  const [liked, setliked] = useState(false);
-  const arr = {
-    user_code: 3,
-    vacation_code: 4,
-  };
-  const isliked = () => {
-    axios
-      .post("http://localhost:4000/api/v1/vacations/addFollower", arr)
-      .then((response) => {
-        setliked(true);
-        console.log(response);
-      });
-    setliked(false);
-  };
-
   return (
     <div className="SingleVacation">
       <Box width="300px">
         <Card variant="outlined">
           <div id="inside-image">
-            <IconButton
-              id="favorite"
-              aria-label="add to favorites"
-              onClick={isliked}
-            >
-              <FavoriteIcon className={liked ? "liked" : " "} />
+            <IconButton id="favorite" aria-label="add to favorites">
+              <FavoriteIcon />
             </IconButton>
             <CardMedia
               component="img"
@@ -57,19 +35,23 @@ function SingleVacation(props: vacationProps): JSX.Element {
               src={props.file_img_name}
             />
           </div>
-          <CardContent>
+          <CardContent
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
             <Typography variant="body2">{props.destination}</Typography>
             <Typography variant="body2">{props.description}</Typography>
             <Typography variant="body2">
-              from:
-              {moment(props.start_date).format("DD-MM-YYYY")}
+              {moment(props.start_date).format("DD/MM/YYYY")}-
+              {moment(props.end_date).format("DD/MM/YYYY")}
             </Typography>{" "}
-            <Typography variant="body2">
-              till:
-              {moment(props.end_date).format("DD-MM-YYYY")}
-            </Typography>
             <CardActions>
-              <Button size="large">{props.price}€</Button>
+              <Button variant="contained" size="large">
+                {props.price}€
+              </Button>
             </CardActions>
           </CardContent>
         </Card>
