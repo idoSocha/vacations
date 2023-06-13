@@ -11,6 +11,8 @@ export enum VacationActionType {
   updateVacation = "updateVacation",
   getVacation = "getVacation",
   allVacations = "allVacations",
+  vacationLikes = "VacationLikes",
+  vacationUnlike = "VacationUnlike",
 }
 
 //action data structure
@@ -39,6 +41,13 @@ export const getVacationAction = (Vacation_code: number): VacationAction => {
   return { type: VacationActionType.getVacation, payload: Vacation_code };
 };
 
+export const vacationLikes = (vacationId: number): VacationAction => {
+  return { type: VacationActionType.vacationLikes, payload: vacationId };
+};
+
+export const vacationUnlike = (vacationId: number): VacationAction => {
+  return { type: VacationActionType.vacationUnlike, payload: vacationId };
+};
 //this is the reducer function, but since it's manged only by redux, we built the function above
 export function VacationReducer(
   currentState: VacationState = new VacationState(),

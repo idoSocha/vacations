@@ -1,6 +1,7 @@
 import Vacation from "../Models/Vacation";
 import User from "../Models/User";
 import Follower from "../Models/Follower";
+import { Request, Response, response } from "express";
 
 import dal_mysql from "../Utils/dal_mysql";
 import { OkPacket } from "mysql";
@@ -72,28 +73,103 @@ const getUser = async (newUser: User) => {
 };
 
 ///////////followers////////
+const toggleLike = async (userId: number, vacationId: number) => {
+  const userSql = `
+    SELECT likedVacations
+    FROM users
+    WHERE user_code = '${userId}'
+  `;
+  const userResult: { likedVacations: string }[] = await dal_mysql.execute(
+    userSql
+  );
+  const currentLikedVacations: number[] = userResult[0].likedVacations
+    ? JSON.parse(userResult[0].likedVacations)
+    : [];
+
+  if (currentLikedVacations.includes(vacationId)) {
+    // Remove the like
+
+    const index = currentLikedVacations.indexOf(vacationId);
+    currentLikedVacations.splice(index, 1);
+
+    const removeLikeSql = `
+      DELETE FROM followers
+      WHERE vacation_code = '${vacationId}' AND user_code = '${userId}'
+    `;
+    await dal_mysql.execute(removeLikeSql);
+
+    const updateVacationSql = `
+      UPDATE vacations
+      SET likes = likes - 1
+      WHERE vacation_code = '${vacationId}'
+    `;
+    await dal_mysql.execute(updateVacationSql);
+  } else {
+    currentLikedVacations.push(vacationId);
+
+    const addLikeSql = `
+      INSERT INTO followers (vacation_code, user_code)
+      VALUES ('${vacationId}', '${userId}')
+    `;
+    await dal_mysql.execute(addLikeSql);
+
+    const updateVacationSql = `
+      UPDATE vacations
+      SET likes = likes + 1
+      WHERE vacation_code = '${vacationId}'
+    `;
+    await dal_mysql.execute(updateVacationSql);
+  }
+
+  const updateLikedVacationsSql = `
+    UPDATE users
+    SET likedVacations = '${JSON.stringify(currentLikedVacations)}'
+    WHERE user_code = '${userId}
+  `;
+  await dal_mysql.execute(updateLikedVacationsSql);
+};
+
+const getLikesByUser = async (userId: number) => {
+  const sql = `
+      SELECT vacations.vacation_code
+      FROM vacations.followers
+      INNER JOIN project03.vacations ON followers.vacation_code = vacations.vacation_code
+      WHERE followers.user_code = '${userId}'  
+    `;
+  const result: Vacation[] = await dal_mysql.execute(sql);
+  return result;
+};
+
+const getLikesPerVacation = async () => {
+  const sql = `
+      SELECT destination, likes
+      FROM project03.vacations
+    `;
+  const result: any = await dal_mysql.execute(sql);
+  return result;
+};
 
 //adding a new follower by clicking the heart button
-const addFollower = async (newFollower: Follower) => {
-  const SQLcommand = `
-    INSERT INTO project03.followers
-    (user_code,vacation_code) 
-    VALUES 
-    ('${newFollower.user_code}','${newFollower.vacation_code}');`;
-  const result: OkPacket = await dal_mysql.execute(SQLcommand);
-  return result.insertId;
-};
+// const addFollower = async (newFollower: Follower) => {
+//   const SQLcommand = `
+//     INSERT INTO project03.followers
+//     (user_code,vacation_code)
+//     VALUES
+//     ('${newFollower.user_code}','${newFollower.vacation_code}');`;
+//   const result: OkPacket = await dal_mysql.execute(SQLcommand);
+//   return result.insertId;
+// };
 
-const deleteFollower = (user_code: number) => {
-  const SQLcommand = `DELETE FROM project03.followers WHERE id=${user_code}`;
-  dal_mysql.execute(SQLcommand);
-  return true;
-};
+// const deleteFollower = (user_code: number) => {
+//   const SQLcommand = `DELETE FROM project03.followers WHERE id=${user_code}`;
+//   dal_mysql.execute(SQLcommand);
+//   return true;
+// };
 
-const getFollowersByVacationCode = async (vacation_code: number) => {
-  const SQLcommand = `SELECT * FROM project03.followers WHERE vacation_code =${vacation_code}`;
-  return await dal_mysql.execute(SQLcommand);
-};
+// const getFollowersByVacationCode = async (vacation_code: number) => {
+//   const SQLcommand = `SELECT * FROM project03.followers WHERE vacation_code =${vacation_code}`;
+//   return await dal_mysql.execute(SQLcommand);
+// };
 
 // one time run on the server.ts file//
 ////tables///
@@ -106,6 +182,7 @@ const createVacationTable = () => {
     end_date DATE NULL,
     price INT NULL,
     file_img_name VARCHAR(255) NULL,
+    likes INT NULL,
     PRIMARY KEY (vacation_code));`;
   const response = dal_mysql.execute(SQLcommand);
 };
@@ -119,6 +196,7 @@ const createUserTable = () => {
         email VARCHAR(45) NOT NULL,
         password VARCHAR(45) NOT NULL,
         isAdmin BOOLEAN default false, 
+        likedVacations JSON NULL
         PRIMARY KEY (user_code));`;
   const response = dal_mysql.execute(SQLcommand);
 };
@@ -147,9 +225,8 @@ export default {
   createUserTable,
   createFollowerTable,
   addUser,
-  // getAllUsers,
   getUser,
-  addFollower,
-  deleteFollower,
-  getFollowersByVacationCode,
+  toggleLike,
+  getLikesByUser,
+  getLikesPerVacation,
 };

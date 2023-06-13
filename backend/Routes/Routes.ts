@@ -47,15 +47,6 @@ router.get(
 
 ///////users////////////
 
-// get all the users
-// router.get(
-//   "/userList",
-//   async (request: Request, response: Response, next: NextFunction) => {
-//     const result = await Logic.getAllUsers();
-//     response.status(200).json(result);
-//   }
-// );
-
 //adding a new user via register
 router.post(
   "/addUser",
@@ -81,30 +72,37 @@ router.post(
 router.post(
   "/addFollower",
   async (request: Request, response: Response, next: NextFunction) => {
-    const newFollower = request.body;
-    const result = await Logic.addFollower(newFollower);
+    const userId = +request.body.user_code;
+    const vacationId = +request.body.vacation_code;
+    const result = await Logic.toggleLike(userId, vacationId);
     response.status(201).json(result);
   }
 );
+router.post("/getLikesByUser"),
+  async (request: Request, response: Response, next: NextFunction) => {
+    const userId = +request.body.user_code;
+    const result = await Logic.getLikesByUser(userId);
+    response.status(200).json(result);
+  };
+
 // get all the followers by vacation id
 router.get(
-  "/followersVacation/:vacation_code", // check if possible to delete by the user code
+  "/vacationFollowers",
   async (request: Request, response: Response, next: NextFunction) => {
-    const vacation_code = +request.params.vacation_code;
-    const result = await Logic.getFollowersByVacationCode(vacation_code);
+    const result = await Logic.getLikesPerVacation();
     response.status(200).json(result);
   }
 );
 
-// deleting a follower by clicking again on the heart
-router.delete(
-  "/deleteFollower/:user_code", // check if possible to delete by the user code
-  async (request: Request, response: Response, next: NextFunction) => {
-    const userCode = +request.params.user_code;
-    Logic.deleteFollower(userCode);
-    response.status(204).json();
-  }
-);
+// // deleting a follower by clicking again on the heart
+// router.delete(
+//   "/deleteFollower/:user_code", // check if possible to delete by the user code
+//   async (request: Request, response: Response, next: NextFunction) => {
+//     const userCode = +request.params.user_code;
+//     Logic.toggleLike(userCode);
+//     response.status(204).json();
+//   }
+// );
 //check if the main page works
 router.get(
   "/",
