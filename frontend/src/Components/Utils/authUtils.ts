@@ -7,8 +7,10 @@ export const userLoggedIn = () => {
 export function userIsAdmin(): boolean {
   const loggedIn = userLoggedIn();
   if (loggedIn) {
-    const user = project.getState().users.users[0];
-    return user.isAdmin;
+    const isAdmin = project.getState().users.isAdmin;
+    console.log(isAdmin);
+
+    return isAdmin;
   } else {
     return false;
   }

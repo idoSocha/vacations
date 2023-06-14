@@ -3,6 +3,7 @@ import User from "../Components/Models/User";
 export class UsersState {
   public users: User[] = [];
   public isLoggedIn: boolean = false;
+  public isAdmin: boolean = false;
 }
 
 //what action i will use...
@@ -51,6 +52,7 @@ export function UsersReducer(
       const likedVacationsString = user.likedVacations || "[]";
       const likedVacations = JSON.parse(likedVacationsString) as number[];
       const userWithLikedVacations = { ...user, likedVacations };
+      newState.isAdmin = action.payload[0].isAdmin;
       newState.users = [userWithLikedVacations];
       break;
     case UserActionType.isLoggedIn:
@@ -60,6 +62,12 @@ export function UsersReducer(
       }
       break;
 
+    // case UserActionType.isAdmin:
+    //   const admin = [...newState.users];
+    //   if (admin) {
+    //     newState.isAdmin = true;
+    //   }
+    //   break;
     case UserActionType.updateLikes:
       const updatedUser = { ...newState.users[0] };
       const likedVacationId = action.payload[0] || 0;

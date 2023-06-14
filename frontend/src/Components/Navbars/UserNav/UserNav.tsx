@@ -7,10 +7,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface UserNavProps {
   onLogout: () => void;
-  initials: string;
 }
 
-function UserNav({ onLogout, initials }: UserNavProps): JSX.Element {
+function UserNav({ onLogout }: UserNavProps): JSX.Element {
   const navigate = useNavigate();
 
   return (
@@ -38,7 +37,8 @@ function UserNav({ onLogout, initials }: UserNavProps): JSX.Element {
         </Button>
       </div>
       <div className="right">
-        <Avatar sx={{ width: 40, height: 40 }}>{initials}</Avatar>
+        <Avatar sx={{ width: 40, height: 40 }}></Avatar>
+
         <Button
           size="large"
           sx={{ height: "2rem" }}

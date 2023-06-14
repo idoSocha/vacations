@@ -196,7 +196,7 @@ const createUserTable = () => {
         email VARCHAR(45) NOT NULL,
         password VARCHAR(45) NOT NULL,
         isAdmin BOOLEAN default false, 
-        likedVacations JSON NULL
+        likedVacations JSON NULL,
         PRIMARY KEY (user_code));`;
   const response = dal_mysql.execute(SQLcommand);
 };

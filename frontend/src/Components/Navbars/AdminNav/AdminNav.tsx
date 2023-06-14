@@ -6,10 +6,9 @@ import { faPlaneDeparture } from "@fortawesome/free-solid-svg-icons";
 
 interface AdminNavProps {
   onLogout: () => void;
-  initials: string;
 }
 
-function AdminNav({ onLogout, initials }: AdminNavProps): JSX.Element {
+function AdminNav({ onLogout }: AdminNavProps): JSX.Element {
   const navigate = useNavigate();
   return (
     <div className="AdminNav">
@@ -57,7 +56,8 @@ function AdminNav({ onLogout, initials }: AdminNavProps): JSX.Element {
       </div>
 
       <div className="right">
-        <Avatar sx={{ width: 40, height: 40 }}>{initials}</Avatar>
+        <Avatar sx={{ width: 40, height: 40 }}></Avatar>
+
         <Button
           size="large"
           sx={{ height: "2rem" }}

@@ -41,11 +41,11 @@ export const getVacationAction = (Vacation_code: number): VacationAction => {
   return { type: VacationActionType.getVacation, payload: Vacation_code };
 };
 
-export const vacationLikes = (vacationId: number): VacationAction => {
+export const vacationLikesAction = (vacationId: number): VacationAction => {
   return { type: VacationActionType.vacationLikes, payload: vacationId };
 };
 
-export const vacationUnlike = (vacationId: number): VacationAction => {
+export const vacationUnlikeAction = (vacationId: number): VacationAction => {
   return { type: VacationActionType.vacationUnlike, payload: vacationId };
 };
 //this is the reducer function, but since it's manged only by redux, we built the function above
@@ -74,7 +74,45 @@ export function VacationReducer(
       break;
     case VacationActionType.allVacations:
       newState.allVacations = action.payload;
+
       break;
+    case VacationActionType.vacationLikes:
+      const vacationId = action.payload;
+      const updatedVacations = currentState.allVacations.map((vacation) => {
+        if (vacation.vacation_code === vacationId) {
+          const updatedLikes = (vacation.likes || 0) + 1;
+          return {
+            ...vacation,
+            likes: updatedLikes,
+          };
+        }
+        return vacation;
+      });
+
+      return {
+        ...currentState,
+        allVacations: updatedVacations,
+      };
+
+    case VacationActionType.vacationUnlike:
+      const unlikeVacationId = action.payload;
+
+      const unlikeVacations = currentState.allVacations.map((vacation) => {
+        if (vacation.vacation_code === unlikeVacationId) {
+          const updatedLikes = (vacation.likes || 0) - 1;
+          return {
+            ...vacation,
+            likes: updatedLikes, // Decrement the likes count
+          };
+        }
+        return vacation;
+      });
+      return {
+        ...currentState,
+        allVacations: unlikeVacations,
+      };
+    default:
+      return currentState;
   }
 
   return newState;

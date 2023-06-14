@@ -18,7 +18,6 @@ const AdminRoutes = () => {
   const { userLogged, user } = userAuth();
   if (userLogged === true) {
     const user = project.getState().users.users[0];
-    console.log(user.isAdmin);
 
     return user.isAdmin ? <Outlet /> : <Navigate to="/login" />;
   } else {

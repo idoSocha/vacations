@@ -15,10 +15,12 @@ import {
   Tooltip,
 } from "@mui/material";
 import axios from "axios";
-
-import { vacationLikes, vacationUnlike } from "../../Redux/VacationReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { updateLikesAction } from "../../../Redux/UsersReducer";
+import {
+  vacationLikesAction,
+  vacationUnlikeAction,
+} from "../../../Redux/VacationsReducer";
 
 interface IconProps {
   vacationId?: number;
@@ -67,7 +69,7 @@ function Icons({
       let updatedLikedVacations = [...user.likedVacations];
       if (isLiked) {
         // Unlike the vacation
-        dispatch(vacationUnlike(vacationId!));
+        dispatch(vacationUnlikeAction(vacationId!));
         setLikes((prevLikes) => prevLikes - 1);
 
         // Update the liked vacations array
@@ -76,7 +78,7 @@ function Icons({
         );
       } else {
         // Like the vacation
-        dispatch(vacationLikes(vacationId!));
+        dispatch(vacationLikesAction(vacationId!));
         setLikes((prevLikes) => prevLikes + 1);
         updatedLikedVacations.push(vacationId!);
       }

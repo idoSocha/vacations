@@ -35,7 +35,7 @@ import { isLoggedInAction } from "../../../Redux/UsersReducer";
 import { userIsAdmin, userLoggedIn } from "../../Utils/authUtils";
 
 function Header(): JSX.Element {
-  const [initials, setInitials] = useState<string>("");
+  const [name, setName] = useState<string>("");
   const navigate = useNavigate();
   const loggedIn = userLoggedIn();
   const isAdmin = userIsAdmin();
@@ -43,10 +43,8 @@ function Header(): JSX.Element {
   useEffect(() => {
     if (loggedIn) {
       const user = project.getState().users.users[0];
-      const firstInitial = user.private_name.charAt(0);
-      const lastInitial = user.last_name.charAt(0);
-      const initials = firstInitial + lastInitial;
-      setInitials(initials);
+
+      setName(user.private_name + " " + user.last_name);
     }
   }, [loggedIn]);
 
@@ -97,9 +95,9 @@ function Header(): JSX.Element {
               </Stack>
             </>
           ) : isAdmin ? (
-            <AdminNav onLogout={handleLogout} initials={initials} />
+            <AdminNav onLogout={handleLogout} />
           ) : (
-            <UserNav onLogout={handleLogout} initials={initials} />
+            <UserNav onLogout={handleLogout} />
           )}
         </Toolbar>
       </AppBar>
