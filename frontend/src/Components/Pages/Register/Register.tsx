@@ -10,6 +10,7 @@ import { addUserAction } from "../../../Redux/UsersReducer";
 
 function Register(): JSX.Element {
   const navigate = useNavigate();
+  const [isPass, setIsPass] = useState(false);
 
   const {
     register,
@@ -17,7 +18,24 @@ function Register(): JSX.Element {
     formState: { errors },
   } = useForm<User>();
 
-  const send = (userData: User) => {
+  const validateEmail = async (email: string) => {
+    let vEmail;
+    await axios
+      .post(`http://localhost:4000/api/v1/vacations/getUserByEmail/${email}`)
+      .then((response) => {
+        vEmail = response.data;
+      });
+    if (vEmail) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  const send = async (userData: User) => {
+    if (await validateEmail(userData.email)) {
+      setIsPass(true);
+      return;
+    }
     axios
       .post("http://localhost:4000/api/v1/vacations/addUser", userData)
       .then((response) => {
@@ -33,6 +51,7 @@ function Register(): JSX.Element {
       <br /> <br />
       <form onSubmit={handleSubmit(send)}>
         <TextField
+          sx={{ m: 2 }}
           label="First Name"
           variant="outlined"
           {...register("private_name", {
@@ -46,6 +65,7 @@ function Register(): JSX.Element {
         <div className="ErrMsg">{errors.private_name?.message}</div>
 
         <TextField
+          sx={{ m: 2 }}
           label="Last Name"
           variant="outlined"
           {...register("last_name", {
@@ -58,8 +78,10 @@ function Register(): JSX.Element {
         />
         <div className="ErrMsg">{errors.last_name?.message}</div>
         <TextField
+          sx={{ m: 2 }}
           label="Email"
           type="email"
+          onKeyUp={() => setIsPass(false)}
           variant="outlined"
           {...register("email", {
             required: { value: true, message: "please enter email " },
@@ -70,8 +92,10 @@ function Register(): JSX.Element {
           })}
         />
         <div className="ErrMsg">{errors.email?.message}</div>
+        {isPass && <span>this email is already taken...</span>}
 
         <TextField
+          sx={{ m: 2 }}
           type="password"
           label="Password"
           variant="outlined"

@@ -8,6 +8,7 @@ import router from "./Routes/Routes";
 import config from "./Utils/config";
 import logic from "./Logic/Logic";
 import ErrorHandler from "./MiddleWare/route-not-found";
+import path from "path";
 
 //create server
 const server = express();
@@ -19,10 +20,10 @@ server.use(cors());
 server.use(express.json());
 
 //where i will save the vacations
-server.use(express.static("vacations_img"));
+server.use(express.static("public"));
 
 //enable file uploading, and create a path for the files if it not exists
-server.use(fileUpload({ createParentPath: true }));
+// server.use(fileUpload({ createParentPath: true }));
 
 //parse the body as json , for easy work
 server.use(bodyParser.json());
@@ -30,6 +31,9 @@ server.use(bodyParser.json());
 //how to use the routes
 server.use("/api/v1/vacations", router);
 // server.use("/api/v1/users", loginRouter);
+server.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "public"));
+});
 
 //create our tables if they not exists
 console.log("check if table exists...");

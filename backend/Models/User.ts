@@ -6,6 +6,7 @@ class User {
   public email: string;
   public password: string;
   public isAdmin: boolean; // to check if should be really boolean
+  public likedVacations: number[];
 
   constructor(
     user_code: number,
@@ -13,7 +14,8 @@ class User {
     last_name: string,
     email: string,
     password: string,
-    isAdmin: boolean
+    isAdmin: boolean,
+    likedVacations: number[]
   ) {
     this.user_code = user_code;
     this.private_name = private_name;
@@ -21,6 +23,7 @@ class User {
     this.email = email;
     this.password = password;
     this.isAdmin = isAdmin; // check if to put as a boolean and how the system will know if its admin or a user
+    this.likedVacations = likedVacations;
   }
 }
 

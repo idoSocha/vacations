@@ -28,7 +28,7 @@ function Login(): JSX.Element {
     axios
       .post(`http://localhost:4000/api/v1/vacations/getUser`, userData)
       .then((response) => {
-        if (project.dispatch(getUserAction(response.data)).payload.length > 0) {
+        if (project.dispatch(getUserAction(response.data)).payload) {
           project.dispatch(isLoggedInAction(true));
           navigate("/");
         } else {

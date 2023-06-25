@@ -65,7 +65,15 @@ export function VacationReducer(
       );
       break;
     case VacationActionType.updateVacation:
-      newState.allVacations = [...newState.allVacations, action.payload];
+      const updatedIndex = newState.allVacations.findIndex(
+        (v) => v.vacation_code === action.payload.vacation_code
+      );
+
+      if (updatedIndex !== -1) {
+        const updatedVacations = [...newState.allVacations];
+        updatedVacations[updatedIndex] = action.payload;
+        newState.allVacations = updatedVacations;
+      }
       break;
     case VacationActionType.getVacation:
       newState.allVacations = [...newState.allVacations].filter(

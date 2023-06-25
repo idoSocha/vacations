@@ -2,8 +2,8 @@ import "./UserNav.css";
 import { useNavigate } from "react-router-dom";
 
 import { Avatar, Button, Typography } from "@mui/material";
-import { faPlaneDeparture } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faPlaneDeparture } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface UserNavProps {
   onLogout: () => void;
@@ -28,7 +28,7 @@ function UserNav({ onLogout }: UserNavProps): JSX.Element {
         /> */}
 
         <Typography variant="h4" component="div">
-          Vacationly
+          Ido´s tour
         </Typography>
       </div>
       <div className="middle">

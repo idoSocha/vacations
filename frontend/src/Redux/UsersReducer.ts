@@ -49,11 +49,13 @@ export function UsersReducer(
       break;
     case UserActionType.getUser:
       const user = action.payload;
-      const likedVacationsString = user.likedVacations || "[]";
-      const likedVacations = JSON.parse(likedVacationsString) as number[];
-      const userWithLikedVacations = { ...user, likedVacations };
-      newState.isAdmin = action.payload[0].isAdmin;
-      newState.users = [userWithLikedVacations];
+      if (user) {
+        const likedVacationsString = user.likedVacations || "[]";
+        const likedVacations = JSON.parse(likedVacationsString) as number[];
+        const userWithLikedVacations = { ...user, likedVacations };
+        newState.isAdmin = action.payload.isAdmin;
+        newState.users = [userWithLikedVacations];
+      }
       break;
     case UserActionType.isLoggedIn:
       newState.isLoggedIn = action.payload;
@@ -62,12 +64,6 @@ export function UsersReducer(
       }
       break;
 
-    // case UserActionType.isAdmin:
-    //   const admin = [...newState.users];
-    //   if (admin) {
-    //     newState.isAdmin = true;
-    //   }
-    //   break;
     case UserActionType.updateLikes:
       const updatedUser = { ...newState.users[0] };
       const likedVacationId = action.payload[0] || 0;

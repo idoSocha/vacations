@@ -10,7 +10,7 @@ const userAuth = () => {
 
 const PrivateRoutes = () => {
   const { userLogged } = userAuth();
-  console.log("PrivateRoutes isLoggedIn: ", userLogged);
+
   return userLogged ? <Outlet /> : <Navigate to="/login" />;
 };
 
@@ -19,7 +19,7 @@ const AdminRoutes = () => {
   if (userLogged === true) {
     const user = project.getState().users.users[0];
 
-    return user.isAdmin ? <Outlet /> : <Navigate to="/login" />;
+    return user.isAdmin ? <Outlet /> : <Navigate to="/*" />;
   } else {
     return <Navigate to="/login" />;
   }
