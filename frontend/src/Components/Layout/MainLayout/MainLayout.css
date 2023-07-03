@@ -2,20 +2,14 @@
   height: 100%;
   box-sizing: border-box;
   display: grid;
-  grid-template-rows: 10% 85% 5%;
+  grid-template-rows: 10% 90%;
   grid-template-columns: repeat(6, 1fr);
 }
 
-.MainLayout > header,
-.MainLayout > footer {
+.MainLayout > header {
   grid-column: span 6;
 }
 
 .MainLayout > main {
   grid-column: span 6;
-}
-
-.MainLayout,
-.MainLayout > * {
-  border: 1px solid white;
 }

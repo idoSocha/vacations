@@ -59,7 +59,7 @@ function Filters({
       filteredVacations = filteredVacations.filter((vacation) => {
         const startDate = new Date(vacation.start_date);
         const endDate = new Date(vacation.end_date);
-        const likes = vacation.likes || 0;
+
         return updatedFilters.every((filter) => {
           switch (filter) {
             case "ongoing":
@@ -94,21 +94,10 @@ function Filters({
                 />
               }
               label={filter.label}
+              color="error"
             />
           );
         })}
-        {/* {filters.map((filter) => {
-            return (
-              <Chip
-                key={filter.value}
-                label={filter.label}
-                variant={selected.includes(filter.value) ? "filled" : "outlined"}
-                onClick={() => handleFilter(filter.value)}
-                color="primary"
-                sx={{ m: 1 }}
-              />
-            );
-          })} */}
       </div>
     </div>
   );

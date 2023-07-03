@@ -1,0 +1,104 @@
+# #MYSQL Container + REST API Container + React Container + volume (internal docker hdd)
+# #NOTE: for hot-reloading React, use => "start": "WATCHPACK_POLLING=true react-scripts start" in package.json
+
+# services:
+#   # project03 database (mysql service):
+#   project03-database-service:
+#     #Image name to create from DockerFile
+#     image: idosochalutsky/project03-database-service-image:1.0
+
+#     # Build the image (if not exists) from specified Dockerfile location:
+#     build: ./database
+
+#     # Container name:
+#     container_name: project03-database-container
+
+#     #port binding [host:container]
+#     ports:
+#       - 3307:3306
+
+#     #Environment variables needed by MySql:
+#     environment:
+#       MYSQL_HOST: localhost #internally for the container
+#       MYSQL_DATABASE: project03
+#       MYSQL_USER: "root"
+#       MYSQL_PASSWORD: 12345678
+#       MYSQL_ROOT_PASSWORD: 12345678 #needed by mysql image
+
+#     #On crash - restart container, unless manually stopped:
+#     restart: unless-stopped
+
+#     #Database volumes:
+#     volumes:
+#       - project03:/var/lib/mysql
+
+#   #---------------------------------------------------------------
+
+#   # project03 backend service
+#   project03-backend-service:
+#     #Image name to create from Dockerfile:
+#     image: idosochalutsky/project03-backend-service-image:1.0
+
+#     #Build the image (if not exists) from a specifiec dockerfile location:
+#     build: ./backend
+
+#     #container name
+#     container_name: project03-backend-container
+
+#     #Port binding (host:container):
+#     ports:
+#       - 5000:4000
+
+#     #Environment variables needed by this service:
+#     environment:
+#       PORT: 4000
+#       MYSQL_HOST: project03-database-service #Above database service name is the host name
+#       MYSQL_DATABASE: project03
+#       MYSQL_USER: "root"
+#       MYSQL_PASSWORD: 12345678
+
+#     #On crash - restart container, unless manually stopped:
+#     restart: unless-stopped
+
+#     #Host bolume for mounting backend development files to backend container
+#     volumes:
+#       - ./backend:/app
+
+#     # On which service we are depending on (starting/stopping order):
+#     depends_on:
+#       - project03-database-service
+#   #---------------------------------------------------------------
+
+#   # project03 frontend service
+#   project03-frontend-service:
+#     #Image name to create  from dockerfile:
+#     image: idosochalutsky/project03-frontend-service-image:1.0
+
+#     #Build the image (if not exists) from specified Dockerfile location:
+#     build: ./frontend
+
+#     #Container name:
+#     container_name: project03-frontend-container
+
+#     #Port binding (host:container):
+#     ports:
+#       - 3000:3000
+
+#     #On crash - restart container, unless manually stopped:
+#     restart: unless-stopped
+
+#     #Host volume for mounting Frontend development files to Frontend container
+#     volumes:
+#       - ./frontend:/app
+
+#     #On which service we are depending on (start/stopping order):
+#     depends_on:
+#       - project03-backend-service
+
+# #---------------------------------------------------------------
+
+# # volumes
+# volumes:
+#   project03:
+# #for running docker-compse , run the command inside the docker-compose.yml file
+# #docker-compose up -d

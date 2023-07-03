@@ -49,7 +49,7 @@ function Login(): JSX.Element {
         <br /> <br />
         <form onSubmit={handleSubmit(send)}>
           <TextField
-            id="outlined-basic"
+            className="outlined-basic"
             label="Email"
             type="email"
             variant="outlined"
@@ -65,7 +65,7 @@ function Login(): JSX.Element {
           <span className="ErrMsg">{errors.email?.message}</span>
           <br />
           <TextField
-            id="outlined-basic"
+            className="outlined-basic"
             label="Password"
             type="password"
             onKeyUp={() => setIsPass(false)}

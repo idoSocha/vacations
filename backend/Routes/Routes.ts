@@ -20,6 +20,7 @@ router.post(
     });
   }
 );
+
 //for upload an image
 
 router.post(
@@ -29,31 +30,6 @@ router.post(
     response.send("image uploaded successfully");
   }
 );
-
-//new code
-// router.post(
-//   "/uploadImage",
-//   async (request: Request, response: Response, next: NextFunction) => {
-//     try {
-//       let sampleFile: UploadedFile;
-//       let uploadPath: string;
-//       if (!request.files || Object.keys(request.files).length === 0) {
-//         throw new Error();
-//       }
-//       sampleFile = request.files.sampleFile as UploadedFile;
-//       uploadPath = "../vacations_img/" + sampleFile.name;
-//       sampleFile.mv(uploadPath, function (err: any) {
-//         if (err) {
-//           throw new Error();
-//         }
-//         console.log("File saved at:", uploadPath); // Log the file path
-//         response.status(201).json({ message: "File uploaded!" });
-//       });
-//     } catch (error) {
-//       next(error);
-//     }
-//   }
-// );
 
 // deleting a vacation by vacation_code by admin
 router.delete(
@@ -104,7 +80,7 @@ router.post(
     response.status(201).json(result);
   }
 );
-
+//getting a user
 router.post(
   "/getUser",
   async (request: Request, response: Response, next: NextFunction) => {
@@ -113,6 +89,8 @@ router.post(
     response.status(200).json(result);
   }
 );
+
+//getting user by email
 router.post(
   "/getUserByEmail/:email",
   async (request: Request, response: Response, next: NextFunction) => {
@@ -158,15 +136,6 @@ router.get(
   }
 );
 
-// // deleting a follower by clicking again on the heart
-// router.delete(
-//   "/deleteFollower/:user_code", // check if possible to delete by the user code
-//   async (request: Request, response: Response, next: NextFunction) => {
-//     const userCode = +request.params.user_code;
-//     Logic.toggleLike(userCode);
-//     response.status(204).json();
-//   }
-// );
 //check if the main page works
 router.get(
   "/",

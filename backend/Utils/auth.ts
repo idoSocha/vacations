@@ -13,7 +13,7 @@ export const generateAuthToken = (user: User): string => {
     },
     secretKey,
     {
-      expiresIn: "60s",
+      expiresIn: 30,
     }
   );
   return token;

@@ -4,16 +4,6 @@ import { UsersReducer } from "./UsersReducer";
 import storage from "redux-persist/lib/storage";
 import { persistStore, persistReducer } from "redux-persist";
 
-// //choose all reducers....
-// const reducers = { vacations: VacationReducer, users: UsersReducer };
-
-// //combine reducers.
-// export const project = configureStore({
-//   reducer: reducers,
-//   middleware: (getDefaultMiddleWare) =>
-//     getDefaultMiddleWare({ serializableCheck: false }),
-// });
-
 const persistConfig = {
   key: "main-root",
   storage,

@@ -3,7 +3,7 @@ import "./MainPage.css";
 import SingleVacation from "../../Vacations/SingleVacation/SingleVacation";
 import { ChangeEvent, useEffect, useState } from "react";
 import axios from "axios";
-// import { Pagination } from "@mui/material";
+
 import { project } from "../../../Redux/ProjectStore";
 import {
   allVacationAction,
@@ -14,6 +14,7 @@ import { userIsAdmin } from "../../Utils/authUtils";
 import SearchBar from "../../Features/SearchBar/SearchBar";
 import Filters from "../../Features/Filters/Filters";
 import { Backdrop, CircularProgress, Pagination } from "@mui/material";
+import { useSelector } from "react-redux";
 function LoadingOverlay({ isLoading }: { isLoading: boolean }) {
   return (
     <Backdrop open={isLoading} style={{ zIndex: 1000 }}>
@@ -26,14 +27,17 @@ function MainPage(): JSX.Element {
   const [vacationList, setList] = useState<Vacation[]>(
     project.getState().vacations.allVacations
   );
-  const userVacations = project.getState().users.users[0].likedVacations;
+  const userVacations = useSelector(
+    (state: any) => state.users.users[0]?.likedVacations || []
+  );
+
   const isAdmin = userIsAdmin();
   const [refresh, setRefresh] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredVacations, setFilteredVacations] =
     useState<Vacation[]>(vacationList);
   const [totalPages, setTotalPages] = useState(0);
-  const itemsPerPage = 9;
+  const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
 
@@ -65,28 +69,10 @@ function MainPage(): JSX.Element {
     );
     project.dispatch(deleteVacationAction(vacationId));
 
-    // const updatedVacations = filteredVacations.filter(
-    //   (vacation) => vacation.vacation_code !== vacationId
-    // );
     setFilteredVacations(project.getState().vacations.allVacations);
     setRefresh(true);
   };
 
-  // useEffect(() => {
-  //   const unsubscribed = project.subscribe(() => {
-  //     setList(() => project.getState().vacations.allVacations);
-  //   });
-  //   if (project.getState().vacations.allVacations.length < 1) {
-  //     axios
-  //       .get("http://localhost:4000/api/v1/vacations/vacationList")
-  //       .then((response) => {
-  //         project.dispatch(allVacationAction(response.data));
-  //       });
-  //   }
-  //   return unsubscribed;
-  // }, []);
-
-  //new
   useEffect(() => {
     if (vacationList.length < 1) {
       axios
@@ -154,6 +140,7 @@ function MainPage(): JSX.Element {
 
       <Pagination
         className="pagination"
+        color="secondary"
         count={totalPages}
         page={currentPage}
         onChange={handlePageChange}

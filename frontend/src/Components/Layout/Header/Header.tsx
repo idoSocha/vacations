@@ -1,32 +1,9 @@
-// import { useState } from "react";
-// import "./Header.css";
-
-// function Header(): JSX.Element {
-//   const [login, setLogin] = useState(false);
-
-//   const userLogged = () => {};
-//   return (
-//     <div className="Header">
-//       <nav></nav>
-//     </div>
-//   );
-// }
-
-// export default Header;
 import React, { useEffect, useState } from "react";
-import {
-  AppBar,
-  Button,
-  ThemeProvider,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { AppBar, Button, Toolbar, Typography } from "@mui/material";
 
 import "./Header.css";
 import { Stack } from "@mui/system";
 import { useNavigate } from "react-router-dom";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlaneDeparture } from "@fortawesome/free-solid-svg-icons";
 
 import { project } from "../../../Redux/ProjectStore";
 import AdminNav from "../../Navbars/AdminNav/AdminNav";
@@ -55,7 +32,7 @@ function Header(): JSX.Element {
 
   return (
     <div className="Header">
-      <AppBar color="primary" style={{ position: "static" }}>
+      <AppBar color="transparent" style={{ position: "static" }}>
         <Toolbar>
           {!loggedIn ? (
             <>
@@ -66,12 +43,11 @@ function Header(): JSX.Element {
                 }}
                 style={{ cursor: "pointer" }}
               >
-                {/* <FontAwesomeIcon
-                    icon={faPlaneDeparture}
-                    size="xl"
-                    style={{ color: "#ffffff", marginRight: "5px" }}
-                  /> */}
-                <Typography variant="h4" component="div">
+                <Typography
+                  variant="h4"
+                  sx={{ fontWeight: "bolder" }}
+                  component="div"
+                >
                   Ido Tours
                 </Typography>
               </div>
@@ -95,9 +71,9 @@ function Header(): JSX.Element {
               </Stack>
             </>
           ) : isAdmin ? (
-            <AdminNav onLogout={handleLogout} />
+            <AdminNav onLogout={handleLogout} name={name} />
           ) : (
-            <UserNav onLogout={handleLogout} />
+            <UserNav onLogout={handleLogout} name={name} />
           )}
         </Toolbar>
       </AppBar>

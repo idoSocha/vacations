@@ -1,9 +1,8 @@
 //imports
 import bodyParser from "body-parser";
-import cors from "cors"; //npm install cors
+import cors from "cors";
 import express from "express";
-import fileUpload from "express-fileupload";
-// import loginRouter from "./Routes/LoginRoutes";
+
 import router from "./Routes/Routes";
 import config from "./Utils/config";
 import logic from "./Logic/Logic";
@@ -40,7 +39,6 @@ console.log("check if table exists...");
 logic.createVacationTable();
 logic.createUserTable();
 logic.createFollowerTable();
-// logic.createFollowersTable();
 
 //handle errors (route not found)
 server.use("*", ErrorHandler);

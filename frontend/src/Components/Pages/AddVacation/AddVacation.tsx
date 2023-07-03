@@ -14,10 +14,7 @@ import { faUmbrellaBeach } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Vacation from "../../Models/Vacation";
 import { project } from "../../../Redux/ProjectStore";
-import {
-  addVacationAction,
-  allVacationAction,
-} from "../../../Redux/VacationsReducer";
+import { addVacationAction } from "../../../Redux/VacationsReducer";
 
 function AddVacation(): JSX.Element {
   const [vacFile, setVacFile] = useState<File | null>(null);
@@ -98,12 +95,6 @@ function AddVacation(): JSX.Element {
         { ...data, file_img_name: vacFile?.name || "" }
       );
 
-      // await axios
-      //   .get("http://localhost:4000/api/v1/vacations/vacationList")
-      //   .then((response) => {
-      //     project.dispatch(allVacationAction(response.data));
-      //   });
-
       const vacationId = addVacationRes.data.vacationId;
 
       await axios.post(
@@ -116,22 +107,6 @@ function AddVacation(): JSX.Element {
         }
       );
 
-      //new code
-      // const newImage = data.file_img_name;
-      // const image = new FormData();
-      // console.log(image);
-
-      // image.append("sampleFile", newImage);
-      // await axios.post(
-      //   "http://localhost:4000/api/v1/vacations/uploadImage",
-      //   image,
-      //   {
-      //     headers: {
-      //       "Content-Type": "multipart/form-data",
-      //     },
-      //   }
-      // );
-
       const newVacation = new Vacation(
         addVacationRes.data.vacationId,
         data.destination,
@@ -140,7 +115,6 @@ function AddVacation(): JSX.Element {
         new Date(data.end_date),
         data.price,
         vacFile?.name || ""
-        // data.file_img_name
       );
 
       project.dispatch(addVacationAction(newVacation));

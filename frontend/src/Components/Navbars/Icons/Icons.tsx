@@ -37,7 +37,7 @@ function Icons({
   initialLikes,
 }: IconProps): JSX.Element {
   const navigate = useNavigate();
-  // const dispatch = useDispatch();
+
   const likeUrl = "http://localhost:4000/api/v1/vacations";
   const user = useSelector((state: any) => state.users.users[0]);
 
@@ -45,7 +45,6 @@ function Icons({
     (state: any) => state.users.users[0].likedVacations
   );
 
-  // const [liked, setLiked] = useState<boolean>(false);
   const [likes, setLikes] = useState<number>(initialLikes);
   const [updatedLikesVacations, setUpdatedLikesVacations] = useState(likedVac);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
@@ -70,29 +69,17 @@ function Icons({
     };
 
     try {
-      // console.log("typeof vacationId: ", typeof vacationId);
-      // console.log("is array an array?: ", Array.isArray(user.likedVacations));
-
       const isLiked = user.likedVacations.includes(vacationId);
-      // console.log(isLiked);
 
       let updatedLikedVacations = [...user.likedVacations];
-      // console.log(updatedLikedVacations);
 
       if (isLiked) {
-        // console.log(isLiked);
-        // console.log(updatedLikedVacations);
-        // console.log(user[0]);
         console.log(isLiked);
 
         // Unlike the vacation
         project.dispatch(vacationUnlikeAction(vacationId!));
         setLikes((prevLikes) => prevLikes - 1);
         setUpdatedLikesVacations(updatedLikedVacations);
-        // Update the liked vacations array
-        // updatedLikedVacations = updatedLikedVacations.filter(
-        //   (id: number) => id !== vacationId
-        // );
       } else {
         // Like the vacation
         project.dispatch(vacationLikesAction(vacationId!));

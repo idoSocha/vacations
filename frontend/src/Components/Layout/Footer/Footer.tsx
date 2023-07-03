@@ -1,11 +1,7 @@
 import "./Footer.css";
 
 function Footer(): JSX.Element {
-  return (
-    <div className="Footer">
-      <div>&copy; Ido</div>
-    </div>
-  );
+  return <div className="Footer"></div>;
 }
 
 export default Footer;

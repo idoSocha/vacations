@@ -1,15 +1,13 @@
 import "./UserNav.css";
 import { useNavigate } from "react-router-dom";
-
 import { Avatar, Button, Typography } from "@mui/material";
-// import { faPlaneDeparture } from "@fortawesome/free-solid-svg-icons";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface UserNavProps {
   onLogout: () => void;
+  name: string;
 }
 
-function UserNav({ onLogout }: UserNavProps): JSX.Element {
+function UserNav({ onLogout, name }: UserNavProps): JSX.Element {
   const navigate = useNavigate();
 
   return (
@@ -21,14 +19,8 @@ function UserNav({ onLogout }: UserNavProps): JSX.Element {
         }}
         style={{ cursor: "pointer" }}
       >
-        {/* <FontAwesomeIcon
-          icon={faPlaneDeparture}
-          size="xl"
-          style={{ color: "#ffffff", marginRight: "5px" }}
-        /> */}
-
-        <Typography variant="h4" component="div">
-          Ido´s tour
+        <Typography variant="h4" sx={{ fontWeight: "bolder" }} component="div">
+          Ido Tours
         </Typography>
       </div>
       <div className="middle">
@@ -38,7 +30,7 @@ function UserNav({ onLogout }: UserNavProps): JSX.Element {
       </div>
       <div className="right">
         <Avatar sx={{ width: 40, height: 40 }}></Avatar>
-
+        <Typography>{name}</Typography>
         <Button
           size="large"
           sx={{ height: "2rem" }}

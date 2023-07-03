@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import dayjs from "dayjs";
+
 import { ZodType, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -81,7 +81,7 @@ function EditVacation(): JSX.Element {
   const onSubmit = async (data: FormData) => {
     const imageData = new FormData();
     imageData.append("image", vacFile!);
-    // const vacationId: number | undefined = editedVacation?.vacation_code;
+
     const updatedVacation = new Vacation(
       editedVacation?.vacation_code!,
       data.destination,
@@ -96,11 +96,6 @@ function EditVacation(): JSX.Element {
     await axios.put(
       `http://localhost:4000/api/v1/vacations/updateVacation`,
       updatedVacation
-      // {
-      //   ...data,
-      //   file_img_name: vacFile ? vacFile.name : editedVacation!.file_img_name,
-      //   vacation_code: editedVacation?.vacation_code,
-      // }
     );
 
     if (editedVacation?.file_img_name !== `${id}_${vacFile?.name}`) {

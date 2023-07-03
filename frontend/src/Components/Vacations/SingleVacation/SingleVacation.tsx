@@ -6,15 +6,12 @@ import {
   CardContent,
   CardHeader,
   CardMedia,
-  // IconButton,
   Typography,
 } from "@mui/material";
-// import FavoriteIcon from "@mui/icons-material/Favorite";
+
 import "./SingleVacation.css";
 import moment from "moment";
-// import axios from "axios";
-// import { deleteVacationAction } from "../../../Redux/VacationsReducer";
-// import { project } from "../../../Redux/ProjectStore";
+
 import Icons from "../../Navbars/Icons/Icons";
 
 interface vacationProps {
@@ -50,12 +47,7 @@ function SingleVacation(props: vacationProps): JSX.Element {
             />
           </div>
           <CardMedia component="img" height="200px" src={imageUrl} />
-          {/* <CardMedia
-            sx={{ height: 270, objectFit: "cover" }}
-            component="img"
-            src={imageUrl}
-            alt={`${props.destination}`}
-          /> */}
+
           <CardContent
             sx={{
               display: "flex",

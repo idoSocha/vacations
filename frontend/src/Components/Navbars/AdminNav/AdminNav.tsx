@@ -1,14 +1,13 @@
 import "./AdminNav.css";
 import { useNavigate } from "react-router-dom";
 import { Button, Avatar, Typography } from "@mui/material";
-import { faPlaneDeparture } from "@fortawesome/free-solid-svg-icons";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface AdminNavProps {
   onLogout: () => void;
+  name: string;
 }
 
-function AdminNav({ onLogout }: AdminNavProps): JSX.Element {
+function AdminNav({ onLogout, name }: AdminNavProps): JSX.Element {
   const navigate = useNavigate();
   return (
     <div className="AdminNav">
@@ -19,14 +18,8 @@ function AdminNav({ onLogout }: AdminNavProps): JSX.Element {
         }}
         style={{ cursor: "pointer" }}
       >
-        {/* <FontAwesomeIcon
-          icon={faPlaneDeparture}
-          size="xl"
-          style={{ color: "#ffffff", marginRight: "5px" }}
-        /> */}
-
-        <Typography variant="h4" component="div">
-          Ido Tours
+        <Typography variant="h4" sx={{ fontWeight: "bolder" }} component="div">
+          Hello Master
         </Typography>
       </div>
 
@@ -57,7 +50,7 @@ function AdminNav({ onLogout }: AdminNavProps): JSX.Element {
 
       <div className="right">
         <Avatar sx={{ width: 40, height: 40 }}></Avatar>
-
+        <Typography>{name}</Typography>
         <Button
           size="large"
           sx={{ height: "2rem" }}

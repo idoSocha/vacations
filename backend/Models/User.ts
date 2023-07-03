@@ -5,7 +5,7 @@ class User {
   public last_name: string;
   public email: string;
   public password: string;
-  public isAdmin: boolean; // to check if should be really boolean
+  public isAdmin: boolean;
   public likedVacations: number[];
 
   constructor(
